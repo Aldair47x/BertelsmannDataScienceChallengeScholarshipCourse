@@ -116,20 +116,224 @@ WHERE name = 'Exxon Mobil';
 
 ```
 
-<h3></h3>
+<h3>Arithmetic Operations</h3>
+
+<li>Create a column that divides the standard_amt_usd by the standard_qty to find the unit price for standard paper for each order. Limit the results to the first 10 orders, and include the id and account_id fields.
+</li>
+
+<li>
+Write a query that finds the percentage of revenue that comes from poster paper for each order. You will need to use only the columns that end with _usd. (Try to do this without using the total column). Include the id and account_id fields. NOTE - you will be thrown an error with the correct solution to this question. This is for a division by zero. You will learn how to get a solution without an error to this query when you learn about CASE statements in a later section. For now, you might just add some very small value to your denominator as a work around. 
+</li>
+
+```
+SELECT id, account_id, standard_amt_usd/standard_qty AS unit_price
+FROM orders
+LIMIT 10;
+
+
+SELECT id, account_id, 
+       poster_amt_usd/(standard_amt_usd + gloss_amt_usd + poster_amt_usd) AS post_per
+FROM orders;
 
 ```
 
+<h2>Introduction to Logical Operators </h2>
+<p>
+	In the next concepts, you will be learning about Logical Operators. Logical Operators include:
+</p>
+
+<h3>LIKE </h3>
+This allows you to perform operations similar to using WHERE and =, but for cases when you might not know exactly what you are looking for.
+
+<h3>IN</h3>
+This allows you to perform operations similar to using WHERE and =, but for more than one condition.
+
+<h3>NOT</h3>
+This is used with IN and LIKE to select all of the rows NOT LIKE or NOT IN a certain condition.
+
+<h3>AND & BETWEEN</h3>
+These allow you to combine operations where all combined conditions must be true.
+
+<h3>OR</h3>
+This allow you to combine operations where at least one of the combined conditions must be true.
+
+
+<h3>LIKE operator</h3>
+
+<li>All the companies whose names start with 'C'.</li> 
+
+<li>All companies whose names contain the string 'one' somewhere in the name.</li>
+
+<li>All companies whose names end with 's'.</li>
+
+```
+SELECT name
+FROM accounts
+WHERE name LIKE 'C%';
+
+SELECT name
+FROM accounts
+WHERE name LIKE '%one%';
+
+SELECT name
+FROM accounts
+WHERE name LIKE '%s';
+
 ```
 
-<h3></h3>
+<h3>IN operator</h3>
+<li>
+	Use the accounts table to find the account name, primary_poc, and sales_rep_id for Walmart, Target, and Nordstrom.
+</li>
+
+<li>
+	Use the web_events table to find all information regarding individuals who were contacted via the channel of organic or adwords.
+</li>
 
 ```
 
+SELECT name, primary_poc, sales_rep_id
+FROM accounts
+WHERE name IN ('Walmart','Target','Nordstrom');
+
+SELECT *
+FROM web_events
+WHERE channel IN ('organic','adwords');
+
+```
+<h3>NOT operator</h3>
+
+<li>
+	Use the accounts table to find the account name, primary poc, and sales rep id for all stores except Walmart, Target, and Nordstrom.
+</li>
+
+<li>
+	
+Use the web_events table to find all information regarding individuals who were contacted via any method except using organic or adwords methods.
+</li>
+
+<li>
+	All the companies whose names do not start with 'C'.
+</li>
+
+<li>
+	All companies whose names do not contain the string 'one' somewhere in the name.
+
+</li>
+
+<li>
+	All companies whose names do not end with 's'.
+</li>
+```
+SELECT name, primary_poc, sales_rep_id
+FROM accounts
+WHERE name NOT IN ('Walmart', 'Target', 'Nordstrom');
+
+SELECT *
+FROM web_events
+WHERE channel NOT IN ('organic', 'adwords');
+
+SELECT name
+FROM accounts
+WHERE name NOT LIKE 'C%';
+
+SELECT name
+FROM accounts
+WHERE name NOT LIKE '%one%';
+
+SELECT name
+FROM accounts
+WHERE name NOT LIKE '%s';
+
+```
+<h3>AND operator</h3>
+
+```
+WHERE column >= 6 AND column <= 10
+
+```
+<h3>BETWEEN Operator</h3>
+
+```
+WHERE column BETWEEN 6 AND 10
+
 ```
 
-<h3></h3>
+<h3>OR operator</h3>
+
+<li>
+	Find list of orders ids where either gloss_qty or poster_qty is greater than 4000. Only include the id field in the resulting table.
+</li>
+
+<li>
+	Write a query that returns a list of orders where the standard_qty is zero and either the gloss_qty or poster_qty is over 1000.
+</li>
+
+```
+SELECT id
+FROM orders
+WHERE gloss_qty > 4000 OR poster_qty > 4000;
+
+SELECT *
+FROM orders
+WHERE standard_qty = 0 AND (gloss_qty > 1000 OR poster_qty > 1000);
 
 ```
 
-```
+<tbody>
+<tr>
+<td>SELECT</td>
+<td>SELECT <strong>Col1</strong>, <strong>Col2</strong>, ...</td>
+<td>Provide the columns you want</td>
+</tr>
+<tr>
+<td>FROM</td>
+<td>FROM <strong>Table</strong></td>
+<td>Provide the table where the columns exist</td>
+</tr>
+<tr>
+<td>LIMIT</td>
+<td>LIMIT <strong>10 </strong></td>
+<td>Limits based number of rows returned</td>
+</tr>
+<tr>
+<td>ORDER BY</td>
+<td>ORDER BY <strong>Col</strong></td>
+<td>Orders table based on the column.  Used with <strong>DESC</strong>.</td>
+</tr>
+<tr>
+<td>WHERE</td>
+<td>WHERE <strong>Col &gt; 5</strong></td>
+<td>A conditional statement to filter your results </td>
+</tr>
+<tr>
+<td>LIKE</td>
+<td>WHERE <strong>Col LIKE '%me%'</strong></td>
+<td>Only pulls rows where column has 'me' within the text </td>
+</tr>
+<tr>
+<td>IN</td>
+<td>WHERE <strong>Col IN ('Y', 'N')</strong></td>
+<td>A filter for only rows with column of 'Y' or 'N'</td>
+</tr>
+<tr>
+<td>NOT</td>
+<td>WHERE <strong>Col NOT IN ('Y', 'N')</strong></td>
+<td><strong>NOT</strong> is frequently used with <strong>LIKE</strong> and <strong>IN</strong></td>
+</tr>
+<tr>
+<td>AND</td>
+<td>WHERE <strong>Col1 &gt; 5 AND Col2 &lt; 3 </strong></td>
+<td>Filter rows where two or more conditions must be true </td>
+</tr>
+<tr>
+<td>OR</td>
+<td>WHERE <strong>Col1 &gt; 5 OR Col2 &lt; 3</strong></td>
+<td>Filter rows where at least one condition must be true</td>
+</tr>
+<tr>
+<td>BETWEEN</td>
+<td>WHERE <strong>Col BETWEEN 3 AND 5</strong></td>
+<td>Often easier syntax than using an <strong>AND</strong></td>
+</tr>
+</tbody>
