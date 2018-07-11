@@ -224,6 +224,7 @@ Use the web_events table to find all information regarding individuals who were 
 <li>
 	All companies whose names do not end with 's'.
 </li>
+
 ```
 SELECT name, primary_poc, sales_rep_id
 FROM accounts
@@ -244,8 +245,8 @@ WHERE name NOT LIKE '%one%';
 SELECT name
 FROM accounts
 WHERE name NOT LIKE '%s';
-
 ```
+
 <h3>AND operator</h3>
 
 ```
@@ -262,11 +263,11 @@ WHERE column BETWEEN 6 AND 10
 <h3>OR operator</h3>
 
 <li>
-	Find list of orders ids where either gloss_qty or poster_qty is greater than 4000. Only include the id field in the resulting table.
+Find list of orders ids where either gloss_qty or poster_qty is greater than 4000. Only include the id field in the resulting table.
 </li>
 
 <li>
-	Write a query that returns a list of orders where the standard_qty is zero and either the gloss_qty or poster_qty is over 1000.
+Write a query that returns a list of orders where the standard_qty is zero and either the gloss_qty or poster_qty is over 1000.
 </li>
 
 ```
